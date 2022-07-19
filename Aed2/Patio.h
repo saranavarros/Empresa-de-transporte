@@ -13,12 +13,15 @@ typedef struct listaPatios {
    Patio* primeiro;
 } ListaPatios;
 
+ListaCarretas* criaListaCarretas(Patio* patio);
+FilaMotoristas* criaFilaMotoristas(Patio* patio);
+
 Patio* criaPatio(ListaPatios* lp, int id) {
     Patio* p = malloc(sizeof(Patio));
     p->id = id;
     p->qtd = 0;
-    p->carretas = criaListaCarretas();
-    p->motoristas = criaFilaMotoristas();
+    p->carretas = criaListaCarretas(p);
+    p->motoristas = criaFilaMotoristas(p);
     p->prox = NULL;
     
     if (lp->primeiro == NULL) {
@@ -35,7 +38,7 @@ Patio* criaPatio(ListaPatios* lp, int id) {
     return p;
 }
 
-Patio* buscaPatio(ListaPatios* lp,int id) {
+Patio* buscaPatio(ListaPatios* lp, int id) {
     Patio* aux = lp->primeiro;
     while(aux->id != id && aux->prox != NULL) {
         aux = aux->prox;
@@ -47,10 +50,32 @@ ListaPatios* criaListaPatios() {
     ListaPatios* lp = malloc(QTD_PATIOS * sizeof(Patio));
     lp->primeiro = NULL;
     for (int i = 0; i < QTD_PATIOS; i++) {
-        int id = i + 1;
+        int id = (i + 1) * 1000;
         criaPatio(lp, id);
     }
     return lp;
+}
+
+ListaCarretas* criaListaCarretas(Patio* patio) {
+    int qtdCarretasPorPatio = QTD_CARRETAS / QTD_PATIOS;
+    ListaCarretas* lc = malloc(qtdCarretasPorPatio * sizeof(Carreta));
+    lc->primeiro = NULL;
+    for (int i = 0; i < qtdCarretasPorPatio; i++) {
+        int numeracao = i + 1 + patio->id;
+        criaCarreta(lc, numeracao);
+    }
+    return lc;
+}
+
+FilaMotoristas* criaFilaMotoristas(Patio* patio) {
+    int qtd_motorista_por_patio = QTD_MOTORISTAS/QTD_PATIOS;
+    FilaMotoristas* fm = malloc(qtd_motorista_por_patio * sizeof(Motorista));
+    fm->primeiro = NULL;
+    for (int i = 0; i < qtd_motorista_por_patio; i++) {
+        int id = i + 1 + patio->id;
+        insereMotorista(fm, id);
+    }
+    return fm;
 }
 
 void imprimeMotoristasDoPatio(Patio* patio) {
@@ -58,6 +83,16 @@ void imprimeMotoristasDoPatio(Patio* patio) {
     Motorista* aux = patio->motoristas->primeiro;
     while(aux != NULL) {
         printf("%d ", aux->id);
+        aux = aux->prox;
+    }
+    printf("\n");
+}
+
+void imprimeCarretasDoPatio(Patio* patio) {
+    printf("Carretas do Patio %d: \n", patio->id);
+    Carreta* aux = patio->carretas->primeiro;
+    while(aux != NULL) {
+        printf("%d ", aux->numeracao);
         aux = aux->prox;
     }
     printf("\n");

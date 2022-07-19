@@ -36,9 +36,3 @@ Motorista* buscaMotorista(FilaMotoristas* lm, int id) {
     }
     return aux;
 }
-
-FilaMotoristas* criaFilaMotoristas() {
-    FilaMotoristas* lm = malloc(QTD_MOTORISTAS * sizeof(Motorista));
-    lm->primeiro = NULL;
-    return lm;
-}

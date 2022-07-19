@@ -12,20 +12,20 @@ typedef struct ListaTrajetos {
    int qtd;
    Trajeto* primeiro;
 } ListaTrajetos;
- 
-int matrizTrajeto[QTD_TRAJETOS][3] = { 
-    {1, 2, 90}, 
-    {2, 1, 120}, 
-    {1, 3, 50}, 
-    {3, 3, 40}, 
-    {1, 4, 110}, 
-    {4, 1, 180}, 
-    {2, 3, 170}, 
-    {3, 2, 30}, 
-    {2, 4, 25}, 
-    {4, 2, 155}, 
-    {3, 4, 280}, 
-    {4, 3, 190}, 
+
+int matrizTrajeto[QTD_TRAJETOS][3] = {
+    {1000, 2000, 90}, 
+    {2000, 1000, 120}, 
+    {1000, 3000, 50}, 
+    {3000, 3000, 40}, 
+    {1000, 4000, 110}, 
+    {4000, 1000, 180}, 
+    {2000, 3000, 170}, 
+    {3000, 2000, 30}, 
+    {2000, 4000, 25}, 
+    {4000, 2000, 155}, 
+    {3000, 4000, 280}, 
+    {4000, 3000, 190}, 
 };
 
 Trajeto* criaTrajeto(ListaTrajetos* lt, Patio* saida, Patio* chegada, int distancia) {
@@ -51,7 +51,7 @@ Trajeto* criaTrajeto(ListaTrajetos* lt, Patio* saida, Patio* chegada, int distan
 
 Trajeto* buscaTrajeto(ListaTrajetos* lt, Patio* saida, Patio* chegada) {
     Trajeto* aux = lt->primeiro;
-    while((aux->saida != saida && aux->chegada != chegada) && aux->prox != NULL) {
+    while((aux->saida->id != saida->id && aux->chegada->id != chegada->id) && aux->prox != NULL) {
         aux = aux->prox;
     }
     return aux;

@@ -1,8 +1,7 @@
-#define QTD_CARRETAS 4
+#define QTD_CARRETAS 40
 
 typedef struct carreta {
   int numeracao;
-  int emTransito;
   struct carreta* prox;
 } Carreta;
 
@@ -14,7 +13,6 @@ typedef struct listaCarretas {
 Carreta* criaCarreta(ListaCarretas* lc, int numeracao) {
     Carreta* c = malloc(sizeof(Carreta));
     c->numeracao = numeracao;
-    c->emTransito = 0;
     c->prox = NULL;
     
     if (lc->primeiro == NULL) {
@@ -37,14 +35,4 @@ Carreta* buscaCarreta(ListaCarretas* lc, int numeracao) {
         aux = aux->prox;
     }
     return aux;
-}
-
-ListaCarretas* criaListaCarretas() {
-    ListaCarretas* lc = malloc(QTD_CARRETAS * sizeof(Carreta));
-    lc->primeiro = NULL;
-    for (int i = 0; i < QTD_CARRETAS; i++) {
-        int numeracao = i + 1;
-        criaCarreta(lc, numeracao);
-    }
-    return lc;
 }
